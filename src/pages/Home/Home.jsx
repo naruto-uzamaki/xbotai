@@ -1,11 +1,12 @@
 import { useOutletContext } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import data from "../../aiData/sampleData.json";
 import { Stack } from "@mui/material";
 import InitialChat from "../../components/InitialChat/InitialChat";
 import { ThemeContext } from "../../theme/ThemeContext";
 import ChattingCard from "../../components/ChattingCard/ChattingCard";
+import ChatInput from "../../components/ChatInput/ChatInput";
 
 function Home() {
   const { chat, setChat } = useOutletContext();
@@ -13,6 +14,8 @@ function Home() {
   const [mode, setMode] = useContext(ThemeContext);
   const [showModal, setShowModal] = useState(false);
   const [selectedChatId, setSelectedChatId] = useState(null);
+  const [scrollToBottom, setScrollToBottom] = useState(false);
+  const listRef = useRef(null);
 
   const generateResponse = (input) => {
     const questionObj = data.find(
@@ -56,12 +59,16 @@ function Home() {
     );
   });
 
+  useEffect(() => {
+    listRef.current?.lastElementChild?.scrollIntoView();
+  }, [scrollToBottom]);
+
   const displayCard = () => {
     if (chat.length === 0) {
       return <InitialChat generateResponse={generateResponse} />;
     }
     return (
-      <Stack spacing={2} margin={2}>
+      <Stack spacing={2} margin={2} ref={listRef}>
         {renderedChat}
       </Stack>
     );
@@ -81,6 +88,13 @@ function Home() {
       <Navbar />
 
       {displayCard()}
+
+      <ChatInput
+        chat={chat}
+        generateResponse={generateResponse}
+        clearChat={() => setChat([])}
+        setScroll={setScrollToBottom}
+      />
     </Stack>
   );
 }
