@@ -7,6 +7,7 @@ import InitialChat from "../../components/InitialChat/InitialChat";
 import { ThemeContext } from "../../theme/ThemeContext";
 import ChattingCard from "../../components/ChattingCard/ChattingCard";
 import ChatInput from "../../components/ChatInput/ChatInput";
+import FeedbackModal from "../../components/FeedbackModal/FeedbackModal";
 
 function Home() {
   const { chat, setChat } = useOutletContext();
@@ -94,6 +95,13 @@ function Home() {
         generateResponse={generateResponse}
         clearChat={() => setChat([])}
         setScroll={setScrollToBottom}
+      />
+
+      <FeedbackModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        chatId={selectedChatId}
+        updateChat={setChat}
       />
     </Stack>
   );
