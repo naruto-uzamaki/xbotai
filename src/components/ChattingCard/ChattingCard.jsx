@@ -109,7 +109,7 @@ function ChattingCard({
             </Typography>
             <Rating
               name="simple-controlled"
-              value={rating}
+              value={readOnly ? details.rating : rating}
               onChange={(event, newValue) => {
                 setRating(newValue);
                 console.log(newValue);
