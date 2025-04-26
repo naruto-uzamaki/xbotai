@@ -13,6 +13,7 @@ function Navbar() {
 
   return (
     <Stack
+      component={"header"}
       direction={"row"}
       justifyContent={"space-between"}
       alignItems={"center"}
@@ -22,6 +23,7 @@ function Navbar() {
         {isMobile ? (
           <MenuIcon onClick={() => handleMobileMenu((prev) => !prev)} />
         ) : null}
+
         <Link to="/" style={{ textDecoration: "none" }}>
           <Typography variant="h1" component="h1">
             Bot AI

@@ -9,7 +9,8 @@ function History() {
   const [filterChats, setFilterChats] = useState([]);
 
   useEffect(() => {
-    const conversations = localStorage.getItem("conversation") || [];
+    const conversations = localStorage.getItem("conversation") || "[]";
+
     setConversation(JSON.parse(conversations));
     setFilterChats(JSON.parse(conversations));
   }, []);
